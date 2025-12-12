@@ -19,6 +19,6 @@ export const overlayInfo = [
     title: "Ventura Prospekts",
     subtitle: "Present Day",
     description:
-      "There are no remains of Kaiserwald left, as the camp has since been demolished. In the place of barracks, there are now apartment buildings. However, a memorial has been built south of the former camp, to commemorate its victims. <br><br>The church, located just east of the monument, and the railway to the west are the only modern reference points of the camp, since they are visible on both the hand-drawn map and aerial photo.",
+      "There are no remains of Kaiserwald left today, as the camp has since been demolished. In the place of barracks, there are now apartment buildings. However, a memorial has been built south of the former camp, to commemorate its victims. <br><br>The church, located just east of the monument, and the railway to the west are the only modern reference points of the camp, since they are visible on both the hand-drawn map and aerial photo.",
   },
 ];
