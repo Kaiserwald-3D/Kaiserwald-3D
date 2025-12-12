@@ -46,7 +46,7 @@
           min="0"
           max="2"
           step="0.01"
-          value="2"
+          value="0"
           id="timelineRange"
           class="range-slider"
         />
@@ -75,11 +75,11 @@
       </div>
     </div>
 
-    <div
+    <!-- <div
       id="coordinates-overlay"
       class="absolute top-5 right-5 p-2"
       style="background-color: rgba(255, 255, 255, 0.75)"
-    ></div>
+    ></div> -->
 
     <!--Adding the camp layer-->
     <div id="camp-overlay" class="overlay hide">
@@ -815,15 +815,9 @@
           },
         ]; */
         // Get the bounds of the markers but filter out the outlier!
-        const bounds = getBoundsForPoints(
-          campGeojson.features.filter(
-            (e) =>
-              e.properties.name !==
-              "Forced Labour - Oficina de Extranjería de Soria"
-          )
-        );
+        const bounds = getBoundsForPoints(campGeojson.features);
         map.fitBounds(bounds, {
-          padding: { top: 10, bottom: 10, left: 10, right: 10 },
+          padding: { top: 20, bottom: 20, left: 20, right: 20 },
         });
       });
 
@@ -886,7 +880,7 @@
 
       fillTimeline([
         { label: "Hand-Drawn Map", time: "1944" },
-        { label: "NARA Arial Picture", time: "1944" },
+        { label: "NARA Aerial Picture", time: "1944" },
         { label: "Present", time: "2025" },
       ]);
       console.log(document.getElementById("timeline-slider"));
