@@ -7,8 +7,8 @@ export const campGeojson = {
       properties: {
         message: "",
         name: "View from north-western watchtower",
-        model: "built-floor-plan-24-nov.glb",
-        altmodel: "built-floor-plan-24-nov.glb",
+        model: "built-floor-plan-24-nov_optimized.glb",
+        altmodel: "built-floor-plan-24-nov_optimized.glb",
         camPos: {
           x: 53.18080135540286,
           y: 8.223571501497474,
