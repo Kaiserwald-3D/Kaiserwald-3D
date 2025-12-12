@@ -1,7 +1,7 @@
 // annotations.js
 
 export const annotations = {
-  "built-floor-plan-24_nov.glb": [
+  "built-floor-plan-24-nov.glb": [
     {
       title: "Convent",
       description:
