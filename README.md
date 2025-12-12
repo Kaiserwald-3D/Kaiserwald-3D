@@ -1,2 +1,2 @@
-# History of Soria 360
-https://history-of-soria-360.github.io/history-of-soria-360/
+# Kaiserwald 3D
+https://kaiserwald-3d.github.io/Kaiserwald-3D/
