@@ -646,10 +646,7 @@
             } else {
               const imageElement = document.createElement("img");
 
-              imageElement.src = marker.properties.link.replace(
-                "./",
-                "http://localhost:8000/"
-              );
+              imageElement.src = marker.properties.link;
 
               imageElement.alt = "Convent Image";
               mediaContainer.appendChild(imageElement);

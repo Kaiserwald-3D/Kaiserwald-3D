@@ -168,7 +168,7 @@ export function loadModel(model, camPos, lookAt, hidden = false) {
     //       ".glb",
     //       "_optimized.glb"
     //     )}`;
-    path = `http://localhost:8000/3D_models/${model}`;
+    path = `./3D_models/${model}`;
   }
 
   console.log("path", path);
