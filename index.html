@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Kaiserwald Reconstructed in 3D</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.css"
+    />
+    <script src="https://unpkg.com/maplibre-gl@5.3.0/dist/maplibre-gl.js"></script>
+    <script src="./utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="relative">
+    <div id="map"></div>
+
+    <!-- Overlay Info Box (applies globally across layers) -->
+    <div
+      id="overlay-info-box"
+      class="info-box text-xs lg:text-base overflow-hidden text-ellipsis"
+    >
+      <h2 id="overlay-info-title" class="text-sm lg:text-lg">Overlay Info</h2>
+      <h3 id="overlay-info-subtitle">Subtitle</h3>
+      <p id="overlay-info-description">
+        Info about the current overlay will appear here.
+      </p>
+    </div>
+
+    <div id="timeline-slider-wrapper" class="slider-background-bar">
+      <div id="timeline-slider" class="timeline-slider">
+        <input
+          type="range"
+          min="0"
+          max="2"
+          step="0.01"
+          value="2"
+          id="timelineRange"
+          class="range-slider"
+        />
+      </div>
+    </div>
+
+    <!-- Adding the overlay for the present day -->
+    <div id="overlay" class="overlay hide">
+      <button class="nav-button" id="closeBtn">✖</button>
+      <button class="nav-button top-[62%] lg:top-[50%]" id="prevBtn">←</button>
+      <button class="nav-button top-[62%] lg:top-[50%]" id="nextBtn">→</button>
+
+      <div id="overlay-left">
+        <div id="overlay-content"></div>
+      </div>
+
+      <div id="overlay-right">
+        <div
+          id="overlay-title"
+          class="text-sm lg:text-base font-bold mr-[40px]"
+        ></div>
+        <p
+          class="whitespace-pre-wrap text-xs lg:text-sm"
+          id="image-description"
+        ></p>
+      </div>
+    </div>
+
+    <div
+      id="coordinates-overlay"
+      class="absolute top-5 right-5 p-2"
+      style="background-color: rgba(255, 255, 255, 0.75)"
+    ></div>
+
+    <!--Adding the camp layer-->
+    <div id="camp-overlay" class="overlay hide">
+      <div id="camp-overlay-left">
+        <div id="camp-media-container">
+          <div id="media-wrapper">
+            <iframe
+              id="camp-iframe"
+              title="Camp Viewer"
+              style="display: none"
+            ></iframe>
+            <img id="camp-image" src="" alt="Camp Image" />
+          </div>
+          <p id="camp-caption" class="image-caption"></p>
+        </div>
+      </div>
+
+      <div id="camp-overlay-right">
+        <h3 id="camp-overlay-headline" class="text-sm lg:text-base font-bold">
+          Kaiserwald History
+        </h3>
+
+        <label class="model-toggle">
+          <input type="checkbox" id="modelToggle" />
+          <span class="slider"></span>
+          Show interior view
+        </label>
+
+        <p id="camp-description" class="text-xs lg:text-sm">
+          This is the concentration camp from 1943...
+        </p>
+      </div>
+
+      <button class="nav-button" id="camp-closeBtn">✖</button>
+    </div>
+
+    <!--Adding the convent layer-->
+    <div id="convent-overlay" class="overlay hide">
+      <div id="convent-overlay-left">
+        <!-- <h2 id="convent-overlay-headline">Convent View</h2> -->
+        <div id="convent-media-container">
+          <img
+            id="convent-image"
+            alt="Convent Image"
+            src="./images/Stclara_1910.png"
+          />
+          <p id="convent-caption" class="image-caption"></p>
+        </div>
+      </div>
+
+      <div id="convent-overlay-right">
+        <h3
+          id="convent-headline"
+          class="text-sm lg:text-base font-bold mr-[40px]"
+        >
+          Kaiserwald History
+        </h3>
+        <p id="convent-subtitle" class="text-xs lg:text-sm"></p>
+        <p id="convent-description" class="text-xs lg:text-sm"></p>
+        <div
+          id="convent-image-wrapper"
+          class="text-xs lg:text-sm w-full flex flex-col gap-2 pt-4 items-center justify-center"
+        ></div>
+      </div>
+
+      <button class="nav-button" id="convent-closeBtn">✖</button>
+    </div>
+
+    <!--- Add the custom JavaScript here -->
+    <script type="module">
+      // Create containers for the markers
+      const presentDayMarkers = [];
+      const sovietMarkers = [];
+      const naraMarkers = [];
+      let customLayer = null;
+
+      /* Bulding markers */
+      import { geojson } from "./soria-geo.js";
+      import { loadCustomLayer } from "./3D-model-layer.js";
+      import { conventGeojson } from "./soria-convent.js";
+      import { campGeojson } from "./soria-camp.js";
+      import {
+        initThreejs,
+        toggleModelVisibility,
+        loadModel,
+      } from "./3D-model-viewer.js";
+      import { overlayInfo } from "./overlay-info.js";
+
+      // Load the GeoJSON data for the convent
+      const marker = conventGeojson.features[0];
+      const imageElement = document.getElementById("convent-image");
+      imageElement.src = marker.properties.link;
+
+      // Initialize the map
+      const map = new maplibregl.Map({
+        container: "map",
+        style:
+          "https://api.maptiler.com/maps/satellite/style.json?key=TdTwD7oIRpXkUvhlz3qX",
+        // center: [41.76136750285904, -2.4661792987112507],
+        // zoom: 14,
+        pitch: 0,
+      }); /*  */
+
+      // Add navigation controls
+      let currentIndex = null;
+
+      // Add navigation controls to the map
+      function showOverlay(index) {
+        const feature = geojson.features[index];
+        const modelKey = feature.properties.model;
+        const description = feature.properties.description;
+        const title = feature.properties.title;
+
+        // Show overlay
+        document.getElementById("overlay").classList.remove("hide");
+
+        // Set the LEFT panel content
+        document.getElementById(
+          "overlay-content"
+        ).innerHTML = `<div id="threejs-container-wrapper" style="position: relative; width: 100%; height: 100%;">
+              <div id="threejs-container" style="width: 100%; height: 100%;"></div>
+            </div>`;
+
+        // ✅ Now the element exists – safe to call init
+        initThreejs("threejs-container", modelKey);
+
+        if (title != null) {
+          const overlayTitle = document.getElementById("overlay-title");
+          overlayTitle.innerText = title;
+        }
+
+        // ✅ Set description in the RIGHT panel
+        const descBox = document.getElementById("image-description");
+        if (descBox) {
+          descBox.innerHTML = description;
+        } else {
+          console.warn("No #image-description element found.");
+        }
+
+        currentIndex = index;
+      }
+
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        if (currentIndex === null) return;
+        const prevIndex = geojson.features[currentIndex]?.properties?.prev;
+        if (prevIndex != null && geojson.features[prevIndex]) {
+          showOverlay(prevIndex);
+        }
+      });
+
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        if (currentIndex === null) return;
+        const nextIndex = geojson.features[currentIndex]?.properties?.next;
+        if (nextIndex != null && geojson.features[nextIndex]) {
+          showOverlay(nextIndex);
+        }
+      });
+
+      function setMarkersVisibility(markers, visible) {
+        markers.forEach((marker) => {
+          const el = marker.getElement();
+          el.style.display = visible ? "block" : "none";
+        });
+      }
+
+      // Add the Kaiserwald map to the page
+      map.on("load", () => {
+        map.addSource("conventPlanImage", {
+          type: "image",
+          url: "./images/k-plans-select.png",
+          coordinates: [
+            [24.1286878771, 56.9994107507], // top-left
+            [24.1335778771, 56.9994128507], // top-right
+            [24.1335787771, 56.9954988507], // bottom-right
+            [24.1286872771, 56.9954992507], // bottom-left
+          ],
+        });
+
+        // Add the camp map to the page
+        map.addSource("camp-map", {
+          type: "image",
+          url: "./images/nara.png",
+          coordinates: [
+            [24.125072, 56.999285], // top-left
+            [24.136516, 56.999295], // top-right
+            [24.136516, 56.995957], // bottom-right
+            [24.125072, 56.995928], // bottom-left
+          ],
+        });
+
+        // Find the first symbol layer to place the raster below it
+        const layers = map.getStyle().layers;
+        const firstSymbolId = layers.find((l) => l.type === "symbol")?.id;
+
+        map.addLayer(
+          {
+            id: "image-layer",
+            type: "raster",
+            source: "conventPlanImage",
+            paint: {
+              "raster-fade-duration": 0,
+              "raster-opacity": 0, // starts hidden, controlled via slider
+            },
+          },
+          firstSymbolId
+        ); // places the raster below markers/labels
+
+        // Add the camp layer
+        map.addLayer(
+          {
+            id: "camp-map-layer",
+            type: "raster",
+            source: "camp-map",
+            paint: {
+              "raster-fade-duration": 0,
+              "raster-opacity": 0, // start hidden, reveal using slider
+            },
+          },
+          firstSymbolId
+        );
+
+        geojson.features.forEach((marker, index) => {
+          const el = document.createElement("div");
+          el.className = "marker";
+          const iconURL =
+            marker.properties.icon ||
+            "https://cdn-icons-png.flaticon.com/128/7976/7976202.png";
+
+          el.style.backgroundImage = `url('${iconURL}')`;
+          el.style.backgroundSize = "contain";
+          el.style.backgroundRepeat = "no-repeat";
+          el.style.backgroundPosition = "center";
+          el.style.width = `${marker.properties.iconSize[0]}px`;
+          el.style.height = `${marker.properties.iconSize[1]}px`;
+
+          el.addEventListener("click", () => {
+            const overlay = document.getElementById("camp-overlay");
+            overlay.classList.remove("hide");
+
+            const modelKey = marker.properties.model;
+            const altmodel = marker.properties.altmodel;
+            const link = marker.properties.link;
+            const caption = marker.properties.caption;
+            const name = marker.properties.name;
+            const description = marker.properties.description;
+            const camPos = marker.properties.camPos;
+            const lookAt = marker.properties.lookAt;
+            const icon = marker.properties.icon;
+
+            const mediaContainer = document.getElementById(
+              "camp-media-container"
+            );
+            const existingCaption = document.getElementById("camp-caption");
+
+            // Clear only dynamic content, not static structure like #camp-caption
+            if (mediaContainer && !icon.includes("icon_3d")) {
+              // Remove previously injected media (e.g. video or img only)
+              mediaContainer
+                .querySelectorAll("img:not(#camp-image), video")
+                .forEach((el) => el.remove());
+              if (existingCaption) existingCaption.textContent = "";
+            }
+
+            const toggleLabel = document.querySelector(
+              "#camp-overlay-right .model-toggle"
+            );
+            const toggle = document.getElementById("modelToggle");
+            toggleLabel.style.display = "none"; // ✅ Hide toggle unless explicitly needed
+
+            // Show toggle ONLY if icon === "./icons/icon_3d.png"
+            if (mediaContainer) {
+              // Clear old content
+              mediaContainer.innerHTML = "";
+
+              if (icon.includes("icon_3d") || icon.includes("icon_360")) {
+                // Load a 3D or 360° model
+                mediaContainer.innerHTML = `
+              <div id="threejs-container-wrapper" style="position: relative; width: 100%; height: 100%;">
+                <div id="threejs-container" style="width: 100%; height: 100%;"></div>
+              </div>
+            `;
+
+                setTimeout(() => {
+                  initThreejs("threejs-container", modelKey, camPos, lookAt);
+                  if (
+                    icon.includes("icon_3d") &&
+                    altmodel &&
+                    altmodel !== modelKey
+                  ) {
+                    loadModel(altmodel, camPos, lookAt, true);
+                  }
+                }, 0);
+
+                // Show toggle ONLY for icon_3d markers
+                if (
+                  icon.includes("icon_3d") &&
+                  altmodel &&
+                  altmodel !== modelKey
+                ) {
+                  toggleLabel.style.display = "inline-flex";
+                  toggle.checked = false;
+                  toggle.onchange = () => {
+                    const visibleModel = toggle.checked ? altmodel : modelKey;
+                    toggleModelVisibility(visibleModel);
+                  };
+                }
+
+                if (caption) {
+                  const captionElem = document.createElement("p");
+                  captionElem.className = "image-caption";
+                  captionElem.textContent = caption;
+                  mediaContainer.appendChild(captionElem);
+                }
+              } else if (link) {
+                let mediaElement;
+                if (link.endsWith(".mp4")) {
+                  mediaElement = document.createElement("video");
+                  mediaElement.src = link;
+                  mediaElement.controls = true;
+                  mediaElement.style =
+                    "width: 100%; height: 100%; object-fit: cover;";
+                } else if (link.endsWith(".jpg") || link.endsWith(".png")) {
+                  mediaElement = document.createElement("img");
+                  mediaElement.src = link;
+                  mediaElement.alt = caption || "Media content";
+                  mediaElement.classList.add("camp-image");
+                }
+
+                if (mediaElement) {
+                  mediaContainer.appendChild(mediaElement);
+                  if (caption) {
+                    const captionElem = document.createElement("p");
+                    captionElem.className = "image-caption";
+                    captionElem.textContent = caption;
+                    mediaContainer.appendChild(captionElem);
+                  }
+                }
+              } else {
+                console.warn("No valid model or media link found for marker.");
+              }
+            }
+
+            document.getElementById("camp-overlay-headline").textContent =
+              name || "Camp Marker";
+            document.getElementById("camp-description").innerHTML =
+              description || "";
+
+            const captionElem = document.getElementById("camp-caption");
+            if (captionElem) {
+              captionElem.textContent = caption || "";
+            }
+
+            // Optional zoom for special markers
+            if (marker.properties.name === "Forced Labour") {
+              map.flyTo({
+                center: marker.geometry.coordinates,
+                zoom: 16,
+                speed: 1.2,
+                curve: 1,
+                essential: true,
+              });
+            }
+          });
+
+          const mapMarker = new maplibregl.Marker({ element: el })
+            .setLngLat(marker.geometry.coordinates)
+            .addTo(map);
+
+          presentDayMarkers.push(mapMarker);
+        });
+
+        setMarkersVisibility(presentDayMarkers, false);
+
+        // Add the 3D model layer
+        customLayer = loadCustomLayer((customLayer) => {});
+        map.addLayer(customLayer);
+
+        // Add camp markers
+        campGeojson.features.forEach((marker) => {
+          const el = document.createElement("div");
+          el.className = "marker";
+          const iconURL =
+            marker.properties.icon ||
+            "https://cdn-icons-png.flaticon.com/128/7976/7976202.png";
+          el.style.backgroundImage = `url('${iconURL}')`;
+          el.style.backgroundSize = "contain";
+          el.style.backgroundRepeat = "no-repeat";
+          el.style.backgroundPosition = "center";
+          el.style.width = `${marker.properties.iconSize[0]}px`;
+          el.style.height = `${marker.properties.iconSize[1]}px`;
+
+          el.addEventListener("click", () => {
+            const overlay = document.getElementById("camp-overlay");
+            overlay.classList.remove("hide");
+
+            const modelKey = marker.properties.model;
+            const altmodel = marker.properties.altmodel;
+            const link = marker.properties.link;
+            const caption = marker.properties.caption;
+            const name = marker.properties.name;
+            const description = marker.properties.description;
+            const camPos = marker.properties.camPos;
+            const lookAt = marker.properties.lookAt;
+            const icon = marker.properties.icon;
+
+            const mediaContainer = document.getElementById(
+              "camp-media-container"
+            );
+            const existingCaption = document.getElementById("camp-caption");
+
+            // Clear only dynamic content, not static structure like #camp-caption
+            if (mediaContainer && !icon.includes("icon_3d")) {
+              // Remove previously injected media (e.g. video or img only)
+              mediaContainer
+                .querySelectorAll("img:not(#camp-image), video")
+                .forEach((el) => el.remove());
+              if (existingCaption) existingCaption.textContent = "";
+            }
+
+            const toggleLabel = document.querySelector(
+              "#camp-overlay-right .model-toggle"
+            );
+            const toggle = document.getElementById("modelToggle");
+            toggleLabel.style.display = "none"; // ✅ Hide toggle unless explicitly needed
+
+            // Show toggle ONLY if icon === "./icons/icon_3d.png"
+            if (mediaContainer) {
+              // Clear old content
+              mediaContainer.innerHTML = "";
+
+              if (icon.includes("icon_3d") || icon.includes("icon_360")) {
+                // Load a 3D or 360° model
+                mediaContainer.innerHTML = `
+              <div id="threejs-container-wrapper" style="position: relative; width: 100%; height: 100%;">
+                <div id="threejs-container" style="width: 100%; height: 100%;"></div>
+              </div>
+            `;
+
+                setTimeout(() => {
+                  initThreejs("threejs-container", modelKey, camPos, lookAt);
+                  if (
+                    icon.includes("icon_3d") &&
+                    altmodel &&
+                    altmodel !== modelKey
+                  ) {
+                    loadModel(altmodel, camPos, lookAt, true);
+                  }
+                }, 0);
+
+                // Show toggle ONLY for icon_3d markers
+                if (
+                  icon.includes("icon_3d") &&
+                  altmodel &&
+                  altmodel !== modelKey
+                ) {
+                  toggleLabel.style.display = "inline-flex";
+                  toggle.checked = false;
+                  toggle.onchange = () => {
+                    const visibleModel = toggle.checked ? altmodel : modelKey;
+                    toggleModelVisibility(visibleModel);
+                  };
+                }
+
+                if (caption) {
+                  const captionElem = document.createElement("p");
+                  captionElem.className = "image-caption";
+                  captionElem.textContent = caption;
+                  mediaContainer.appendChild(captionElem);
+                }
+              } else if (link) {
+                let mediaElement;
+                if (link.endsWith(".mp4")) {
+                  mediaElement = document.createElement("video");
+                  mediaElement.src = link;
+                  mediaElement.controls = true;
+                  mediaElement.style =
+                    "width: 100%; height: 100%; object-fit: cover;";
+                } else if (link.endsWith(".jpg") || link.endsWith(".png")) {
+                  mediaElement = document.createElement("img");
+                  mediaElement.src = link;
+                  mediaElement.alt = caption || "Media content";
+                  mediaElement.classList.add("camp-image");
+                }
+
+                if (mediaElement) {
+                  mediaContainer.appendChild(mediaElement);
+                  if (caption) {
+                    const captionElem = document.createElement("p");
+                    captionElem.className = "image-caption";
+                    captionElem.textContent = caption;
+                    mediaContainer.appendChild(captionElem);
+                  }
+                }
+              } else {
+                console.warn("No valid model or media link found for marker.");
+              }
+            }
+
+            document.getElementById("camp-overlay-headline").textContent =
+              name || "Camp Marker";
+            document.getElementById("camp-description").innerHTML =
+              description || "";
+
+            const captionElem = document.getElementById("camp-caption");
+            if (captionElem) {
+              captionElem.textContent = caption || "";
+            }
+
+            // Optional zoom for special markers
+            if (marker.properties.name === "Forced Labour") {
+              map.flyTo({
+                center: marker.geometry.coordinates,
+                zoom: 16,
+                speed: 1.2,
+                curve: 1,
+                essential: true,
+              });
+            }
+          });
+
+          const mapMarker = new maplibregl.Marker({ element: el })
+            .setLngLat(marker.geometry.coordinates)
+            .addTo(map);
+
+          sovietMarkers.push(mapMarker);
+        });
+
+        setMarkersVisibility(sovietMarkers, false);
+
+        // Add convent markers with a separate overlay design
+        conventGeojson.features.forEach((marker) => {
+          const el = document.createElement("div");
+          el.className = "marker";
+          const iconURL =
+            marker.properties.icon ||
+            "https://cdn-icons-png.flaticon.com/128/7976/7976202.png";
+          el.style.backgroundImage = `url('${iconURL}')`;
+          el.style.backgroundSize = "contain";
+          el.style.backgroundRepeat = "no-repeat";
+          el.style.backgroundPosition = "center";
+          el.style.width = `${marker.properties.iconSize[0]}px`;
+          el.style.height = `${marker.properties.iconSize[1]}px`;
+
+          el.addEventListener("click", () => {
+            const overlay = document.getElementById("convent-overlay");
+            overlay.classList.remove("hide");
+            const mediaContainer = document.getElementById(
+              "convent-media-container"
+            );
+
+            // Clear previous content (image or video)
+            mediaContainer.innerHTML = "";
+
+            if (marker.properties.link.endsWith(".mp4")) {
+              const videoElement = document.createElement("video");
+
+              // Replace "./video" with your local server path
+              videoElement.src = marker.properties.link
+                .replace("./video", "http://localhost:8000/Archive/video")
+                .replace(".mp4", "_handbroken.mp4");
+
+              videoElement.controls = true;
+              mediaContainer.appendChild(videoElement);
+            } else {
+              const imageElement = document.createElement("img");
+
+              imageElement.src = marker.properties.link.replace(
+                "./",
+                "http://localhost:8000/"
+              );
+
+              imageElement.alt = "Convent Image";
+              mediaContainer.appendChild(imageElement);
+            }
+
+            // Add caption
+            if (marker.properties.caption) {
+              const captionElement = document.createElement("p");
+              captionElement.className = "image-caption";
+              captionElement.textContent = marker.properties.caption;
+              mediaContainer.appendChild(captionElement);
+            }
+
+            // Update text content
+            document.getElementById("convent-description").innerHTML =
+              marker.properties.description;
+            if (marker.media != null) {
+              document.getElementById("convent-image-wrapper").innerHTML =
+                marker.media.map(
+                  (e) => `<img class="max-h-80 w-fit" src="${e}" />`
+                );
+            }
+            document.getElementById("convent-headline").innerText =
+              marker.properties.name;
+
+            const subtitleElement = document.getElementById("convent-subtitle");
+            if (marker.properties.subtitle) {
+              subtitleElement.innerText = marker.properties.subtitle;
+            } else {
+              subtitleElement.innerText = ""; // Fallback message
+            }
+
+            const captionElement = document.getElementById("convent-caption");
+            // captionElement.textContent = marker.properties.caption || "";
+          });
+
+          const mapMarker = new maplibregl.Marker({ element: el })
+            .setLngLat(marker.geometry.coordinates)
+            .addTo(map);
+
+          naraMarkers.push(mapMarker);
+        });
+
+        setMarkersVisibility(naraMarkers, false);
+
+        // Timeline slider functionality
+        const timelineRange = document.getElementById("timelineRange");
+        const timelineSteps = document.querySelectorAll(
+          ".timeline-steps .step"
+        );
+
+        timelineRange.addEventListener("input", (e) => {
+          const value = e.target.value;
+          document.getElementById("overlay-info-box").classList.remove("close");
+          updateTimeline(value);
+        });
+
+        // Assuming these IDs correspond to your overlays
+        // const overlayIds = ["convent", "camp", "present"];
+        const overlayIds = ["soviet", "nara", "present"];
+
+        function updateTimeline(value) {
+          const valueNum = parseFloat(value);
+
+          // Determine active overlay ID based on timeline value
+          // let activeOverlayId;
+          // if (valueNum < 0.5) {
+          //   activeOverlayId = "convent";
+          // } else if (valueNum < 1.5) {
+          //   activeOverlayId = "camp";
+          // } else {
+          //   activeOverlayId = "present";
+          // }
+          let activeOverlayId;
+          if (valueNum < 0.5) {
+            activeOverlayId = "soviet";
+          } else if (valueNum < 1.5) {
+            activeOverlayId = "nara";
+          } else {
+            activeOverlayId = "present";
+          }
+
+          // Set opacity of the historic overlay
+          let imageOpacity = 0;
+          let modelOpacity = 0;
+
+          if (valueNum <= 1) {
+            // From convent (0) to concentration camp (1)
+            imageOpacity = 1 - valueNum; // 1 → 0
+            modelOpacity = valueNum; // 0 → 1
+          } else {
+            // From concentration camp (1) to today (2)
+            imageOpacity = 0;
+            modelOpacity = 2 - valueNum; // 1 → 0
+          }
+
+          // Update the overlay info based on the current activeOverlayId
+          const info = overlayInfo.find(
+            (entry) => entry.id === activeOverlayId
+          );
+          if (info) {
+            console.log("Info", info);
+
+            document.getElementById("overlay-info-title").textContent =
+              info.title;
+            document.getElementById("overlay-info-subtitle").textContent =
+              info.subtitle || "";
+            document.getElementById("overlay-info-description").innerHTML =
+              info.description;
+          }
+
+          // Update map layer opacity
+          map.setPaintProperty("image-layer", "raster-opacity", imageOpacity);
+          map.setPaintProperty(
+            "camp-map-layer",
+            "raster-opacity",
+            modelOpacity
+          );
+
+          // Control marker visibility cleanly
+          if (activeOverlayId === "soviet") {
+            setMarkersVisibility(sovietMarkers, true);
+            setMarkersVisibility(naraMarkers, false);
+            setMarkersVisibility(presentDayMarkers, false);
+            map.setLayoutProperty("3d-model", "visibility", "none");
+          } else if (activeOverlayId === "nara") {
+            setMarkersVisibility(sovietMarkers, false);
+            setMarkersVisibility(naraMarkers, false);
+            setMarkersVisibility(presentDayMarkers, false);
+            map.setLayoutProperty("3d-model", "visibility", "true");
+          } else if (activeOverlayId === "present") {
+            setMarkersVisibility(sovietMarkers, false);
+            setMarkersVisibility(naraMarkers, false);
+            setMarkersVisibility(presentDayMarkers, true);
+            map.setLayoutProperty("3d-model", "visibility", "none");
+          }
+        }
+
+        map.on("click", (e) => {
+          document.getElementById(
+            "coordinates-overlay"
+          ).innerHTML = `[${e.lngLat.lng}, ${e.lngLat.lat}]`;
+        });
+
+        updateTimeline(timelineRange.value);
+
+        /* const testPoints = [
+          {
+            type: "Feature",
+            properties: {},
+            geometry: {
+              coordinates: [-2.471141507186843, 41.77545604066435],
+              type: "Point",
+            },
+          },
+          {
+            type: "Feature",
+            properties: {},
+            geometry: {
+              coordinates: [24.109682170018544, 56.948490631419304],
+              type: "Point",
+            },
+          },
+        ]; */
+        // Get the bounds of the markers but filter out the outlier!
+        const bounds = getBoundsForPoints(
+          campGeojson.features.filter(
+            (e) =>
+              e.properties.name !==
+              "Forced Labour - Oficina de Extranjería de Soria"
+          )
+        );
+        map.fitBounds(bounds, {
+          padding: { top: 10, bottom: 10, left: 10, right: 10 },
+        });
+      });
+
+      // Fit the bounds of the maps to the markers
+
+      document.getElementById("overlay-info-box").onclick = () => {
+        document.getElementById("overlay-info-box").classList.remove("close");
+      };
+
+      document.getElementById("map").onclick = () => {
+        document.getElementById("overlay-info-box").classList.add("close");
+      };
+
+      // document.getElementById("timeline-slider-wrapper").onclick = () => {
+      //   document.getElementById("overlay-info-box").classList.add("close");
+      // };
+
+      // document.getElementById("timeline-slider").onclick = () => {
+      //   document.getElementById("overlay-info-box").classList.add("close");
+      // };
+
+      const test = document.getElementsByClassName("maplibregl-ctrl-attrib");
+      for (const e of test) {
+        e.classList.remove("maplibregl-compact-show");
+      }
+
+      document.getElementById("closeBtn").onclick = () => {
+        document.getElementById("overlay").classList.add("hide");
+        currentIndex = null;
+      };
+
+      document.getElementById("camp-closeBtn").onclick = () => {
+        document.getElementById("camp-overlay").classList.add("hide");
+        currentIndex = null;
+      };
+
+      document.getElementById("convent-closeBtn").onclick = () => {
+        document.getElementById("convent-overlay").classList.add("hide");
+        currentIndex = null;
+      };
+
+      function fillTimeline(dates) {
+        for (const date of dates) {
+          let dateTime = document.createElement("div");
+          dateTime.classList.add("tick-label");
+          dateTime.innerHTML = date.time;
+
+          let dateLabel = document.createElement("div");
+          dateLabel.classList.add("tick-label");
+          dateLabel.innerHTML = date.label;
+
+          let tickWrapper = document.createElement("div");
+          tickWrapper.className = "flex gap-3 flex-col";
+          tickWrapper.append(dateTime);
+          tickWrapper.append(dateLabel);
+
+          document.getElementById("timeline-slider").append(tickWrapper);
+        }
+      }
+
+      fillTimeline([
+        { label: "Hand-Drawn Map", time: "1944" },
+        { label: "NARA Arial Picture", time: "1944" },
+        { label: "Present", time: "2025" },
+      ]);
+      console.log(document.getElementById("timeline-slider"));
+    </script>
+  </body>
+</html>
