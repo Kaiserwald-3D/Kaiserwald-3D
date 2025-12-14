@@ -349,12 +349,12 @@
             const toggle = document.getElementById("modelToggle");
             toggleLabel.style.display = "none"; // ✅ Hide toggle unless explicitly needed
 
-            // Show toggle ONLY if icon === "./icons/icon_3d.png"
+            // Show toggle ONLY if icon === "./icons/icon_3d.png - DISABLED FOR KAISERWALD - ARON 14/12/2025"
             if (mediaContainer) {
               // Clear old content
               mediaContainer.innerHTML = "";
 
-              if (icon.includes("icon_3d") || icon.includes("icon_360")) {
+              if (icon.includes("icon_none") || icon.includes("icon_none")) {
                 // Load a 3D or 360° model
                 mediaContainer.innerHTML = `
               <div id="threejs-container-wrapper" style="position: relative; width: 100%; height: 100%;">

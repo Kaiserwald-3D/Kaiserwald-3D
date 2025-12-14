@@ -42,7 +42,7 @@ export function loadCustomLayer(callback) {
       loader.setMeshoptDecoder(MeshoptDecoder);
 
       loader.load(
-        "./3D_models/built-floor-plan-24-nov.glb",
+        "./3D_models/KW-final-v3.glb",
         (gltf) => {
           this.scene.add(gltf.scene);
           // callback(customLayer); // ✅ Add layer only when model is loaded

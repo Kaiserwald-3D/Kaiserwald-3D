@@ -7,17 +7,17 @@ export const campGeojson = {
       properties: {
         message: "",
         name: "View from north-western watchtower",
-        model: "built-floor-plan-24-nov_optimized.glb",
-        altmodel: "built-floor-plan-24-nov_optimized.glb",
+        model: "KW-final-v3.glb",
+        // altmodel: "built-floor-plan-24-nov_optimized.glb",
         camPos: {
-          x: 53.18080135540286,
-          y: 8.223571501497474,
-          z: -309.6466190054126,
+          x: 58.59446986310261,
+          y: 8.468374095982815,
+          z: -309.5947808442536,
         },
         lookAt: {
-          x: 150.4221919343923,
-          y: 1.4226596460717715e-8,
-          z: -316.8744316624602,
+          x: 128.89827502114295,
+          y: 1.5192517309271744e-8,
+          z: -338.3887150907276,
         },
         iconSize: [30, 30],
         icon: "./icons/icon_3d.png",
@@ -27,6 +27,9 @@ export const campGeojson = {
           The northern entry gate of the camp. The image, likely taken from the North-Western watchtower,
           shows someone close to it, which indicates that the size of this gate was significantly
           taller than the average person.
+        </p>
+        <p style="font-size: 0.85em; color: #555;">
+          <br><br>Image: Gosudarstvennyi arkhiv Rossiiskoi Federatsii (GARF), Signature: 8409/49
         </p>
         <img src="./images/gate.jpg" style="width:100%; margin-top:10px; border-radius:6px;" />
         `,
@@ -41,24 +44,27 @@ export const campGeojson = {
       type: "Feature",
       properties: {
         message: "View from Southern Watchtower",
-        model: "built-floor-plan-24-nov.glb",
-        altmodel: "built-floor-plan-24-nov.glb",
+        model: "KW-final-v3.glb",
+        // altmodel: "built-floor-plan-24-nov.glb",
         name: "Southern overview",
         camPos: {
-          x: 120.73677775694458,
-          y: 6.483908936371626,
-          z: -95.95562384317263,
+          x: 119.8488909094241,
+          y: 6.3345392444775985,
+          z: -96.4858241539292,
         },
         lookAt: {
-          x: 119.59946738597026,
-          y: 3.4755213993393013,
-          z: -117.56532369609958,
+          x: 99.64375120149137,
+          y: 1.048115935793049,
+          z: -150.77403572780457,
         },
         iconSize: [30, 30],
         icon: "./icons/icon_3d.png",
         description: `
         <p>
           An overview of the camp from the south. Likely taken from a watchtower.
+        </p>
+        <p style="font-size: 0.85em; color: #555;">
+          <br><br>Image: Latvian State Historical Archives, Fonds P-132, Inventory 28, File 75, Page 65
         </p>
         <img src="./images/south.jpg" style="width:100%; margin-top:10px; border-radius:6px;" />
           `,
@@ -74,23 +80,26 @@ export const campGeojson = {
       properties: {
         message: "",
         name: "Southern part of the camp",
-        model: "built-floor-plan-24-nov.glb",
-        altmodel: "built-floor-plan-24-nov.glb",
+        model: "KW-Final-v3.glb",
+        // altmodel: "built-floor-plan-24-nov.glb",
         camPos: {
-          x: 140.01527514425194,
-          y: 2.695317028690933,
-          z: -154.91066513256203,
+          x: 139.82559937548447,
+          y: 2.40283571425362,
+          z: -159.2427028851049,
         },
         lookAt: {
-          x: 168.18211758997438,
-          y: 2.0997476866129583,
-          z: -195.08972110082658,
+          x: 171.05371429240924,
+          y: 1.7479443632797997,
+          z: -189.7117009816203,
         },
         iconSize: [30, 30],
         icon: "./icons/icon_3d.png",
         description: `
         <p>
-          This image was likely taken from the southern part of the camp, facing east. The identity of the man in the picture is unknown.
+          This image was likely taken in the southern part of the camp, facing east. The identity of the man in the picture is unknown.
+        </p>
+        <p style="font-size: 0.85em; color: #555;">
+          <br><br>Image: Gosudarstvennyi arkhiv Rossiiskoi Federatsii (GARF), Signature unknown
         </p>
         <img src="./images/man.jpg" style="width:100%; margin-top:10px; border-radius:6px;" />
           `,
@@ -106,17 +115,17 @@ export const campGeojson = {
       properties: {
         message: "",
         name: "Barracks",
-        model: "built-floor-plan-24-nov.glb",
-        altmodel: "built-floor-plan-24-nov.glb",
+        model: "KW-Final-v3.glb",
+        // altmodel: "built-floor-plan-24-nov.glb",
         camPos: {
-          x: 150.90612416793377,
-          y: 1.673956601190183,
-          z: -195.02633914727673,
+          x: 154.57182709399427,
+          y: 1.4069111292172078,
+          z: -199.94754441336917,
         },
         lookAt: {
-          x: 158.17197187505576,
-          y: 1.7095106542712748,
-          z: -212.67211204741255,
+          x: 159.26207490261118,
+          y: 1.815325549301852,
+          z: -210.6305308994332,
         },
         iconSize: [30, 30],
         icon: "./icons/icon_3d.png",
@@ -127,7 +136,8 @@ export const campGeojson = {
         <p style="font-size: 0.85em; color: #555;">
           <br><br>Strauss, Berthold. Interview 3964. Segment 26-28. Interview by Rachelle Cohen. <i>Visual History Archive</i>, USC Shoah Foundation, 13 July 1995. https://vha.usc.edu/testimony/3964. Accessed 09 Dec 2025.
           <br><br>Basner, Yakob. Interview 6277. Segment 76-78. Interview by Mary Kasdan. <i>Visual History Archive</i>, USC Shoah Foundation, 04 December 1995. https://vha.usc.edu/testimony/6277. Accessed 09 Dec 2025.
-        </p>
+          <br><br>Image: Latvian State Historical Archives (LVVA), Fonds P-132, Inventory 28, File 75, Page 62
+          </p>
         <img src="./images/fence.jpg" style="width:100%; margin-top:10px; border-radius:6px;" />
           `,
       },
@@ -142,17 +152,17 @@ export const campGeojson = {
       properties: {
         message: "",
         name: "Latrine",
-        model: "built-floor-plan-24-nov.glb",
-        altmodel: "built-floor-plan-24-nov.glb",
+        model: "KW-Final-v3.glb",
+        // altmodel: "built-floor-plan-24-nov.glb",
         camPos: {
-          x: 69.94753150533512,
-          y: 1.2671190961544196,
-          z: -310.28013323305976,
+          x: 71.60058329978357,
+          y: 1.9975989121580973,
+          z: -311.6995857874189,
         },
         lookAt: {
-          x: 139.8426451272773,
-          y: 3.1045929708695454,
-          z: -307.6277242424484,
+          x: 78.24643224200179,
+          y: 1.0410513176167713,
+          z: -310.09501880554996,
         },
         iconSize: [30, 30],
         icon: "./icons/icon_3d.png",
@@ -179,17 +189,17 @@ export const campGeojson = {
       properties: {
         message: "",
         name: "Barbed-Wire Fence",
-        model: "built-floor-plan-24-nov.glb",
-        altmodel: "built-floor-plan-24-nov.glb",
+        model: "KW-final-v3.glb",
+        // altmodel: "built-floor-plan-24-nov.glb",
         camPos: {
-          x: 104.96093976204868,
-          y: 0.8584010497591839,
-          z: -229.94445721322597,
+          x: 101.23900368286202,
+          y: 1.027016985698823,
+          z: -237.08516213983452,
         },
         lookAt: {
-          x: 106.9254075541646,
-          y: 1.0164338804657005,
-          z: -229.91548921248034,
+          x: 147.5249711449844,
+          y: 2.003325463065164,
+          z: -232.58572083348278,
         },
         iconSize: [30, 30],
         icon: "./icons/icon_3d.png",
@@ -207,17 +217,17 @@ export const campGeojson = {
       properties: {
         message: "",
         name: "Infirmary",
-        model: "built-floor-plan-24-nov.glb",
-        altmodel: "built-floor-plan-24-nov.glb",
+        model: "KW-final-v3.glb",
+        // altmodel: "built-floor-plan-24-nov.glb",
         camPos: {
-          x: 106.50273343316991,
-          y: 5.161706612458672,
-          z: -236.9281262902046,
+          x: 98.33099881211126,
+          y: 5.791441018912481,
+          z: -244.4174558519997,
         },
         lookAt: {
-          x: 106.29360407071597,
-          y: 2.957776526340501,
-          z: -249.63324146614852,
+          x: 100.4153749136121,
+          y: 2.642603487399109,
+          z: -256.72980578252987,
         },
         iconSize: [30, 30],
         icon: "./icons/icon_3d.png",
