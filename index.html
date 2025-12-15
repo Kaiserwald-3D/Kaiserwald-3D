@@ -261,7 +261,7 @@
         // Add the camp map to the page
         map.addSource("camp-map", {
           type: "image",
-          url: "./images/nara.png",
+          url: "./images/nara.jpg",
           coordinates: [
             [24.125072, 56.999285], // top-left
             [24.136516, 56.999295], // top-right
@@ -349,12 +349,12 @@
             const toggle = document.getElementById("modelToggle");
             toggleLabel.style.display = "none"; // ✅ Hide toggle unless explicitly needed
 
-            // Show toggle ONLY if icon === "./icons/icon_3d.png"
+            // Show toggle ONLY if icon === "./icons/icon_3d.png - DISABLED FOR KAISERWALD - ARON 14/12/2025"
             if (mediaContainer) {
               // Clear old content
               mediaContainer.innerHTML = "";
 
-              if (icon.includes("icon_3d") || icon.includes("icon_360")) {
+              if (icon.includes("icon_none") || icon.includes("icon_none")) {
                 // Load a 3D or 360° model
                 mediaContainer.innerHTML = `
               <div id="threejs-container-wrapper" style="position: relative; width: 100%; height: 100%;">
@@ -491,7 +491,10 @@
             const existingCaption = document.getElementById("camp-caption");
 
             // Clear only dynamic content, not static structure like #camp-caption
-            if (mediaContainer && !icon.includes("icon_3d")) {
+            if (
+              (mediaContainer && !icon.includes("icon_3d")) ||
+              icon.includes("icon_story")
+            ) {
               // Remove previously injected media (e.g. video or img only)
               mediaContainer
                 .querySelectorAll("img:not(#camp-image), video")
@@ -510,7 +513,11 @@
               // Clear old content
               mediaContainer.innerHTML = "";
 
-              if (icon.includes("icon_3d") || icon.includes("icon_360")) {
+              if (
+                icon.includes("icon_3d") ||
+                icon.includes("icon_360") ||
+                icon.includes("icon_story")
+              ) {
                 // Load a 3D or 360° model
                 mediaContainer.innerHTML = `
               <div id="threejs-container-wrapper" style="position: relative; width: 100%; height: 100%;">
@@ -521,9 +528,10 @@
                 setTimeout(() => {
                   initThreejs("threejs-container", modelKey, camPos, lookAt);
                   if (
-                    icon.includes("icon_3d") &&
-                    altmodel &&
-                    altmodel !== modelKey
+                    icon.includes("icon_3d") ||
+                    (icon.includes("icon_story") &&
+                      altmodel &&
+                      altmodel !== modelKey)
                   ) {
                     loadModel(altmodel, camPos, lookAt, true);
                   }
@@ -531,9 +539,10 @@
 
                 // Show toggle ONLY for icon_3d markers
                 if (
-                  icon.includes("icon_3d") &&
-                  altmodel &&
-                  altmodel !== modelKey
+                  icon.includes("icon_3d") ||
+                  (icon.includes("icon_story") &&
+                    altmodel &&
+                    altmodel !== modelKey)
                 ) {
                   toggleLabel.style.display = "inline-flex";
                   toggle.checked = false;
