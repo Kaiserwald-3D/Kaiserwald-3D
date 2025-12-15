@@ -1,7 +1,7 @@
 // annotations.js
 
 export const annotations = {
-  "KW-final-v3-opt.glb": [
+  "KW-final-v3-optimized.glb": [
     //   {
     //     title: "Convent",
     //     description:

@@ -42,7 +42,7 @@ export function loadCustomLayer(callback) {
       loader.setMeshoptDecoder(MeshoptDecoder);
 
       loader.load(
-        "./3D_models/KW-final-v3-opt.glb",
+        "./3D_models/KW-final-v3-optimized.glb",
         (gltf) => {
           this.scene.add(gltf.scene);
           // callback(customLayer); // ✅ Add layer only when model is loaded
