@@ -38,7 +38,7 @@ export const geojson = {
         link: "./images/church.jpg", // Image link
         caption: "Photo taken from Wikipedia",
         description:
-          "Eastern Orthodox church outside the camp, built in 1890. It was included in the hand-drawn map of the camp by the Soviets. Since the camp has since been demolished, this church is one the few currently existing reference points to the location of the camp. <br><br>Source: <i>Buildings and Structures in Rig: Churches in Riga, Museums in Riga, Places of Worship in Riga, Freedom Monument, Riga Zoo.</i> Riga: General Books. 2010. p. 204. ISBN 9781156071755.",
+          "Eastern Orthodox church outside the camp, built in 1890. It was included in the hand-drawn map of the camp by the Soviets. Since the camp has since been demolished, this church is one the few currently existing reference points to its location. <br><br>Source: <i>Buildings and Structures in Rig: Churches in Riga, Museums in Riga, Places of Worship in Riga, Freedom Monument, Riga Zoo.</i> Riga: General Books. 2010. p. 204. ISBN 9781156071755.",
       },
       geometry: {
         type: "Point",
@@ -52,7 +52,7 @@ export const geojson = {
       properties: {
         message: "",
         name: "Railway west of the camp",
-        icon: "./icons/icon_info.png",
+        icon: "./icons/icon_story.png",
         iconSize: [30, 30],
         link: "./images/train.png", // Image link
         caption: "Photo taken from Google Maps",

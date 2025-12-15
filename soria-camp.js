@@ -28,10 +28,47 @@ export const campGeojson = {
           shows someone close to it, which indicates that the size of this gate was significantly
           taller than the average person.
         </p>
+        <img src="./images/gate.jpg" style="width:100%; margin-top:10px; border-radius:6px;" />
         <p style="font-size: 0.85em; color: #555;">
           <br><br>Image: Gosudarstvennyi arkhiv Rossiiskoi Federatsii (GARF), Signature: 8409/49
         </p>
-        <img src="./images/gate.jpg" style="width:100%; margin-top:10px; border-radius:6px;" />
+        `,
+      },
+      geometry: {
+        type: "Point",
+        coordinates: [24.13014263896673, 56.99855916265099],
+      },
+    },
+
+    {
+      //Watchtower
+      type: "Feature",
+      properties: {
+        message: "",
+        name: "Watchtower up close",
+        model: "KW-final-v3.glb",
+        // altmodel: "built-floor-plan-24-nov_optimized.glb",
+        camPos: {
+          x: 58.59446986310261,
+          y: 8.468374095982815,
+          z: -309.5947808442536,
+        },
+        lookAt: {
+          x: 128.89827502114295,
+          y: 1.5192517309271744e-8,
+          z: -338.3887150907276,
+        },
+        iconSize: [30, 30],
+        icon: "./icons/icon_3d.png",
+
+        description: `
+        <p>
+          These were used as a way to observe the prisoners and ensure nobody escaped.
+        </p>
+        <img src="./images/WT.png" style="width:100%; margin-top:10px; border-radius:6px;" />
+        <p style="font-size: 0.85em; color: #555;">
+          <br><br>Image: Gosudarstvennyi arkhiv Rossiiskoi Federatsii (GARF), Signature: 8409/47
+        </p>
         `,
       },
       geometry: {
@@ -39,6 +76,7 @@ export const campGeojson = {
         coordinates: [24.129478624126023, 56.99844636126565],
       },
     },
+
     {
       //South-West WT
       type: "Feature",
@@ -63,10 +101,10 @@ export const campGeojson = {
         <p>
           An overview of the camp from the south. Likely taken from a watchtower.
         </p>
+        <img src="./images/south.jpg" style="width:100%; margin-top:10px; border-radius:6px;" />
         <p style="font-size: 0.85em; color: #555;">
           <br><br>Image: Latvian State Historical Archives, Fonds P-132, Inventory 28, File 75, Page 65
         </p>
-        <img src="./images/south.jpg" style="width:100%; margin-top:10px; border-radius:6px;" />
           `,
       },
       geometry: {
@@ -74,13 +112,14 @@ export const campGeojson = {
         coordinates: [24.130618906590996, 56.99639811315524],
       },
     },
+
     {
       //Man-south
       type: "Feature",
       properties: {
         message: "",
         name: "Southern part of the camp",
-        model: "KW-Final-v3.glb",
+        model: "KW-final-v3.glb",
         // altmodel: "built-floor-plan-24-nov.glb",
         camPos: {
           x: 139.82559937548447,
@@ -98,10 +137,10 @@ export const campGeojson = {
         <p>
           This image was likely taken in the southern part of the camp, facing east. The identity of the man in the picture is unknown.
         </p>
+        <img src="./images/man.jpg" style="width:100%; margin-top:10px; border-radius:6px;" />
         <p style="font-size: 0.85em; color: #555;">
           <br><br>Image: Gosudarstvennyi arkhiv Rossiiskoi Federatsii (GARF), Signature unknown
         </p>
-        <img src="./images/man.jpg" style="width:100%; margin-top:10px; border-radius:6px;" />
           `,
       },
       geometry: {
@@ -109,13 +148,14 @@ export const campGeojson = {
         coordinates: [24.131148483353513, 56.99692009478173],
       },
     },
+
     {
       //Center Barracks
       type: "Feature",
       properties: {
         message: "",
         name: "Barracks",
-        model: "KW-Final-v3.glb",
+        model: "KW-final-v3.glb",
         // altmodel: "built-floor-plan-24-nov.glb",
         camPos: {
           x: 154.57182709399427,
@@ -131,14 +171,15 @@ export const campGeojson = {
         icon: "./icons/icon_3d.png",
         description: `
         <p>
-          The barracks were called <i>blocks</i>. Each had a <i>Block Elder</i> - these were part of the <i>kapos</i>, a group of criminals from German jails and other Nazi collaborators, whose duty was the supervision of the prisoners. Inmates from the camp describe them to have been worse than the Nazi guards, as they repeatedly engaged in beatings and torture. <br><br>"What the SS couldn't do and didn't do to hurt us, these criminals would."
+          The barracks were called <i>blocks</i>. Each had a <i>Block Elder</i> - these were part of the <i>kapos</i>, a group of criminals from German jails and other Nazi collaborators, whose duty was the supervision of the prisoners.
         </p>
         <p style="font-size: 0.85em; color: #555;">
-          <br><br>Strauss, Berthold. Interview 3964. Segment 26-28. Interview by Rachelle Cohen. <i>Visual History Archive</i>, USC Shoah Foundation, 13 July 1995. https://vha.usc.edu/testimony/3964. Accessed 09 Dec 2025.
           <br><br>Basner, Yakob. Interview 6277. Segment 76-78. Interview by Mary Kasdan. <i>Visual History Archive</i>, USC Shoah Foundation, 04 December 1995. https://vha.usc.edu/testimony/6277. Accessed 09 Dec 2025.
-          <br><br>Image: Latvian State Historical Archives (LVVA), Fonds P-132, Inventory 28, File 75, Page 62
-          </p>
+        </p>
         <img src="./images/fence.jpg" style="width:100%; margin-top:10px; border-radius:6px;" />
+        <p style="font-size: 0.85em; color: #555;">
+          <br><br>Image: Latvian State Historical Archives (LVVA), Fonds P-132, Inventory 28, File 75, Page 62
+        </p>
           `,
       },
       geometry: {
@@ -146,13 +187,42 @@ export const campGeojson = {
         coordinates: [24.13127250201603, 56.997417814415],
       },
     },
+
+    {
+      //Barracks Testimony
+      type: "Feature",
+      properties: {
+        message: "",
+        name: "Inside the barracks",
+        icon: "./icons/icon_story.png",
+        iconSize: [30, 30],
+        link: "./images/inside.jpg", // Image link
+        caption:
+          "Image Source: Latvian State Historical Archives (LVVA), Fonds P-132, inventory 28, file 75, page 54",
+        description: `
+        <p>
+          This is an image from inside the barracks, taken after the camp's evacuation and capture by the soviets. 
+          <br><br>The suffering inflicted upon the Jewish victims of the camp was not only done by the hands of SS guards. The <i>kapos</i> would often prove to be even more cruel. 
+          <br><br>"What the SS couldn't do and didn't do to hurt us, these criminals would."
+        </p>
+        <p style="font-size: 0.85em; color: #555;">
+          <br><br>Basner, Yakob. Interview 6277. Segment 91-94. Interview by Mary Kasdan. <i>Visual History Archive</i>, USC Shoah Foundation, 04 December 1995. https://vha.usc.edu/testimony/6277. Accessed 09 Dec 2025.
+        </p>
+          `,
+      },
+      geometry: {
+        type: "Point",
+        coordinates: [24.131402128977896, 56.99753098788133],
+      },
+    },
+
     {
       //Latrine
       type: "Feature",
       properties: {
         message: "",
         name: "Latrine",
-        model: "KW-Final-v3.glb",
+        model: "KW-final-v3.glb",
         // altmodel: "built-floor-plan-24-nov.glb",
         camPos: {
           x: 71.60058329978357,
@@ -165,7 +235,7 @@ export const campGeojson = {
           z: -310.09501880554996,
         },
         iconSize: [30, 30],
-        icon: "./icons/icon_3d.png",
+        icon: "./icons/icon_story.png",
         description: `
         <p>
           This small shack likely served as the latrine. Former prisoner and Holocaust survivor Yakob Basner, described it as such: “It was a filthy place, where you could not only sit, but stand down. And you were glad that you didn’t fall in the hole”.  
@@ -183,6 +253,7 @@ export const campGeojson = {
         coordinates: [24.130058197366935, 56.9984069656561],
       },
     },
+
     {
       //Fence
       type: "Feature",
@@ -211,6 +282,7 @@ export const campGeojson = {
         coordinates: [24.130498292683797, 56.99763985688935],
       },
     },
+
     {
       //infirmary
       type: "Feature",
@@ -230,7 +302,7 @@ export const campGeojson = {
           z: -256.72980578252987,
         },
         iconSize: [30, 30],
-        icon: "./icons/icon_3d.png",
+        icon: "./icons/icon_story.png",
         description: `
         <p>
           This building likely served as the infirmary. While prisoners would get treated here, many would not return. As such, prisoners would not report illnesses and injuries to the guards.
