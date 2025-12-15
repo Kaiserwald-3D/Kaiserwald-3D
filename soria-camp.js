@@ -7,7 +7,7 @@ export const campGeojson = {
       properties: {
         message: "",
         name: "View from north-western watchtower",
-        model: "KW-final-v3.glb",
+        model: "KW-final-v3-opt.glb",
         // altmodel: "built-floor-plan-24-nov_optimized.glb",
         camPos: {
           x: 58.59446986310261,
@@ -46,7 +46,7 @@ export const campGeojson = {
       properties: {
         message: "",
         name: "Watchtower up close",
-        model: "KW-final-v3.glb",
+        model: "KW-final-v3-opt.glb",
         // altmodel: "built-floor-plan-24-nov_optimized.glb",
         camPos: {
           x: 58.59446986310261,
@@ -82,7 +82,7 @@ export const campGeojson = {
       type: "Feature",
       properties: {
         message: "View from Southern Watchtower",
-        model: "KW-final-v3.glb",
+        model: "KW-final-v3-opt.glb",
         // altmodel: "built-floor-plan-24-nov.glb",
         name: "Southern overview",
         camPos: {
@@ -119,7 +119,7 @@ export const campGeojson = {
       properties: {
         message: "",
         name: "Southern part of the camp",
-        model: "KW-final-v3.glb",
+        model: "KW-final-v3-opt.glb",
         // altmodel: "built-floor-plan-24-nov.glb",
         camPos: {
           x: 139.82559937548447,
@@ -155,7 +155,7 @@ export const campGeojson = {
       properties: {
         message: "",
         name: "Barracks",
-        model: "KW-final-v3.glb",
+        model: "KW-final-v3-opt.glb",
         // altmodel: "built-floor-plan-24-nov.glb",
         camPos: {
           x: 154.57182709399427,
@@ -222,7 +222,7 @@ export const campGeojson = {
       properties: {
         message: "",
         name: "Latrine",
-        model: "KW-final-v3.glb",
+        model: "KW-final-v3-opt.glb",
         // altmodel: "built-floor-plan-24-nov.glb",
         camPos: {
           x: 71.60058329978357,
@@ -260,7 +260,7 @@ export const campGeojson = {
       properties: {
         message: "",
         name: "Barbed-Wire Fence",
-        model: "KW-final-v3.glb",
+        model: "KW-final-v3-opt.glb",
         // altmodel: "built-floor-plan-24-nov.glb",
         camPos: {
           x: 101.23900368286202,
@@ -289,7 +289,7 @@ export const campGeojson = {
       properties: {
         message: "",
         name: "Infirmary",
-        model: "KW-final-v3.glb",
+        model: "KW-final-v3-opt.glb",
         // altmodel: "built-floor-plan-24-nov.glb",
         camPos: {
           x: 98.33099881211126,
