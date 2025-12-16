@@ -10,14 +10,14 @@ export const campGeojson = {
         model: "KW-final-v3-optimized.glb",
         // altmodel: "built-floor-plan-24-nov_optimized.glb",
         camPos: {
-          x: 58.59446986310261,
-          y: 8.468374095982815,
-          z: -309.5947808442536,
+          x: 57.50504976198278,
+          y: 8.264463998406233,
+          z: -317.19017533790014,
         },
         lookAt: {
-          x: 128.89827502114295,
-          y: 1.5192517309271744e-8,
-          z: -338.3887150907276,
+          x: 87.0655972254219,
+          y: 1.882057567417577,
+          z: -323.2845883558646,
         },
         iconSize: [30, 30],
         icon: "./icons/icon_3d.png",
@@ -45,25 +45,25 @@ export const campGeojson = {
       type: "Feature",
       properties: {
         message: "",
-        name: "Watchtower up close",
+        name: "Watchtower",
         model: "KW-final-v3-optimized.glb",
         // altmodel: "built-floor-plan-24-nov_optimized.glb",
         camPos: {
-          x: 58.59446986310261,
-          y: 8.468374095982815,
-          z: -309.5947808442536,
+          x: 44.08911910627233,
+          y: 2.279420410665287,
+          z: -297.9523906108315,
         },
         lookAt: {
-          x: 128.89827502114295,
-          y: 1.5192517309271744e-8,
-          z: -338.3887150907276,
+          x: 47.50637169938315,
+          y: 3.377230775442987,
+          z: -306.7668092454274,
         },
         iconSize: [30, 30],
         icon: "./icons/icon_3d.png",
 
         description: `
         <p>
-          These were used as a way to observe the prisoners and ensure nobody escaped.
+          These were used for the surveillance of prisoners and to ensure nobody escaped.
         </p>
         <img src="./images/WT.png" style="width:100%; margin-top:10px; border-radius:6px;" />
         <p style="font-size: 0.85em; color: #555;">
@@ -86,14 +86,14 @@ export const campGeojson = {
         // altmodel: "built-floor-plan-24-nov.glb",
         name: "Southern overview",
         camPos: {
-          x: 119.8488909094241,
-          y: 6.3345392444775985,
-          z: -96.4858241539292,
+          x: 117.07805490132446,
+          y: 3.99502905289087,
+          z: -105.42531497277655,
         },
         lookAt: {
-          x: 99.64375120149137,
-          y: 1.048115935793049,
-          z: -150.77403572780457,
+          x: 88.79737708562855,
+          y: 1.4614977169501993,
+          z: -169.00582700292708,
         },
         iconSize: [30, 30],
         icon: "./icons/icon_3d.png",
@@ -122,14 +122,14 @@ export const campGeojson = {
         model: "KW-final-v3-optimized.glb",
         // altmodel: "built-floor-plan-24-nov.glb",
         camPos: {
-          x: 139.82559937548447,
-          y: 2.40283571425362,
-          z: -159.2427028851049,
+          x: 165.21798060591547,
+          y: 1.6466314363425716,
+          z: -146.4314803320956,
         },
         lookAt: {
-          x: 171.05371429240924,
-          y: 1.7479443632797997,
-          z: -189.7117009816203,
+          x: 176.47297390042883,
+          y: 1.2253720254984604,
+          z: -178.5059663284373,
         },
         iconSize: [30, 30],
         icon: "./icons/icon_3d.png",
