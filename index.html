@@ -537,10 +537,10 @@
                   }
                 }, 0);
 
-                // Show toggle ONLY for icon_3d markers
+                // Show toggle ONLY for icon_3d markers - Disabled by Aron
                 if (
-                  icon.includes("icon_3d") ||
-                  (icon.includes("icon_story") &&
+                  icon.includes("icon_none") ||
+                  (icon.includes("icon_done") &&
                     altmodel &&
                     altmodel !== modelKey)
                 ) {
