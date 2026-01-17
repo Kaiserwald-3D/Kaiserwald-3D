@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <title>Kaiserwald Reconstructed in 3D</title>
@@ -197,9 +197,8 @@
         document.getElementById("overlay").classList.remove("hide");
 
         // Set the LEFT panel content
-        document.getElementById(
-          "overlay-content"
-        ).innerHTML = `<div id="threejs-container-wrapper" style="position: relative; width: 100%; height: 100%;">
+        document.getElementById("overlay-content").innerHTML =
+          `<div id="threejs-container-wrapper" style="position: relative; width: 100%; height: 100%;">
               <div id="threejs-container" style="width: 100%; height: 100%;"></div>
             </div>`;
 
@@ -284,7 +283,7 @@
               "raster-opacity": 0, // starts hidden, controlled via slider
             },
           },
-          firstSymbolId
+          firstSymbolId,
         ); // places the raster below markers/labels
 
         // Add the camp layer
@@ -298,7 +297,7 @@
               "raster-opacity": 0, // start hidden, reveal using slider
             },
           },
-          firstSymbolId
+          firstSymbolId,
         );
 
         geojson.features.forEach((marker, index) => {
@@ -330,7 +329,7 @@
             const icon = marker.properties.icon;
 
             const mediaContainer = document.getElementById(
-              "camp-media-container"
+              "camp-media-container",
             );
             const existingCaption = document.getElementById("camp-caption");
 
@@ -344,7 +343,7 @@
             }
 
             const toggleLabel = document.querySelector(
-              "#camp-overlay-right .model-toggle"
+              "#camp-overlay-right .model-toggle",
             );
             const toggle = document.getElementById("modelToggle");
             toggleLabel.style.display = "none"; // ✅ Hide toggle unless explicitly needed
@@ -486,7 +485,7 @@
             const icon = marker.properties.icon;
 
             const mediaContainer = document.getElementById(
-              "camp-media-container"
+              "camp-media-container",
             );
             const existingCaption = document.getElementById("camp-caption");
 
@@ -503,7 +502,7 @@
             }
 
             const toggleLabel = document.querySelector(
-              "#camp-overlay-right .model-toggle"
+              "#camp-overlay-right .model-toggle",
             );
             const toggle = document.getElementById("modelToggle");
             toggleLabel.style.display = "none"; // ✅ Hide toggle unless explicitly needed
@@ -513,11 +512,15 @@
               // Clear old content
               mediaContainer.innerHTML = "";
 
-              if (
-                icon.includes("icon_3d") ||
-                icon.includes("icon_360") ||
-                icon.includes("icon_story")
-              ) {
+              // if (
+              //   icon.includes("icon_3d") ||
+              //   icon.includes("icon_360")
+              //   // icon.includes("icon_story")
+              // ) {
+
+              const hasModel = modelKey || altmodel;
+
+              if (hasModel) {
                 // Load a 3D or 360° model
                 mediaContainer.innerHTML = `
               <div id="threejs-container-wrapper" style="position: relative; width: 100%; height: 100%;">
@@ -636,7 +639,7 @@
             const overlay = document.getElementById("convent-overlay");
             overlay.classList.remove("hide");
             const mediaContainer = document.getElementById(
-              "convent-media-container"
+              "convent-media-container",
             );
 
             // Clear previous content (image or video)
@@ -675,7 +678,7 @@
             if (marker.media != null) {
               document.getElementById("convent-image-wrapper").innerHTML =
                 marker.media.map(
-                  (e) => `<img class="max-h-80 w-fit" src="${e}" />`
+                  (e) => `<img class="max-h-80 w-fit" src="${e}" />`,
                 );
             }
             document.getElementById("convent-headline").innerText =
@@ -704,7 +707,7 @@
         // Timeline slider functionality
         const timelineRange = document.getElementById("timelineRange");
         const timelineSteps = document.querySelectorAll(
-          ".timeline-steps .step"
+          ".timeline-steps .step",
         );
 
         timelineRange.addEventListener("input", (e) => {
@@ -754,7 +757,7 @@
 
           // Update the overlay info based on the current activeOverlayId
           const info = overlayInfo.find(
-            (entry) => entry.id === activeOverlayId
+            (entry) => entry.id === activeOverlayId,
           );
           if (info) {
             console.log("Info", info);
@@ -772,7 +775,7 @@
           map.setPaintProperty(
             "camp-map-layer",
             "raster-opacity",
-            modelOpacity
+            modelOpacity,
           );
 
           // Control marker visibility cleanly
@@ -795,9 +798,8 @@
         }
 
         map.on("click", (e) => {
-          document.getElementById(
-            "coordinates-overlay"
-          ).innerHTML = `[${e.lngLat.lng}, ${e.lngLat.lat}]`;
+          document.getElementById("coordinates-overlay").innerHTML =
+            `[${e.lngLat.lng}, ${e.lngLat.lat}]`;
         });
 
         updateTimeline(timelineRange.value);

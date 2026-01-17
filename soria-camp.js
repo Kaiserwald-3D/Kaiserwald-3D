@@ -10,14 +10,14 @@ export const campGeojson = {
         model: "KW-final-v3-optimized.glb",
         // altmodel: "built-floor-plan-24-nov_optimized.glb",
         camPos: {
-          x: 57.50504976198278,
-          y: 8.264463998406233,
-          z: -317.19017533790014,
+          x: 62.95052015284657,
+          y: 5.835741695160868,
+          z: -312.126710646543,
         },
         lookAt: {
-          x: 87.0655972254219,
-          y: 1.882057567417577,
-          z: -323.2845883558646,
+          x: 134.19014461808433,
+          y: 0.8489506810981108,
+          z: -309.5228243173673,
         },
         iconSize: [30, 30],
         icon: "./icons/icon_3d.png",
@@ -41,7 +41,7 @@ export const campGeojson = {
     },
 
     {
-      //Watchtower
+      //Watchtower and fence
       type: "Feature",
       properties: {
         message: "",
@@ -49,21 +49,21 @@ export const campGeojson = {
         model: "KW-final-v3-optimized.glb",
         // altmodel: "built-floor-plan-24-nov_optimized.glb",
         camPos: {
-          x: 44.08911910627233,
-          y: 2.279420410665287,
-          z: -297.9523906108315,
+          x: 29.39416684430683,
+          y: 1.018566407356329,
+          z: -290.90839010696396,
         },
         lookAt: {
-          x: 47.50637169938315,
-          y: 3.377230775442987,
-          z: -306.7668092454274,
+          x: 63.6849968271887,
+          y: 11.747361529382276,
+          z: -381.64326575772805,
         },
         iconSize: [30, 30],
         icon: "./icons/icon_3d.png",
 
         description: `
         <p>
-          These were used for the surveillance of prisoners and to ensure nobody escaped.
+          The barbed-wire fence, used to keep the prisoners inside the camp, as well as separate them by gender. Unlike other concentration camp, this fence was not electric, and prisoners would regularly meet and communicate around it. A watchtower is also visible in the distance.
         </p>
         <img src="./images/WT.png" style="width:100%; margin-top:10px; border-radius:6px;" />
         <p style="font-size: 0.85em; color: #555;">
@@ -240,7 +240,7 @@ export const campGeojson = {
         <p>
           This small shack likely served as the latrine. Former prisoner and Holocaust survivor Yakob Basner, described it as such: “It was a filthy place, where you could not only sit, but stand down. And you were glad that you didn’t fall in the hole”.  
           <br><br>Yakob told his story of how he was found standing with his feet on the toilet by <i>Block Elder Filsinger</i> (part of the <i>kapos</i>, criminal groups tasked with supervising the inmates). As punishment, he received 25 lashes. 
-          <br><br>“I gritted my teeth, determined not to cry out. In my head I counted 'one, two, three, four'. My silence infuriated him … and with every blow, the stick came down harder”. 
+          <br><br>“I gritted my teeth, determined not to cry out. In my head I counted 'one, two, three, four'. My silence infuriated him … and with every blow, the stick came down harder.” 
           <br><br>However, Yakob was never informed by anyone prior, that standing on the toilet was not allowed: “He asked me ‘Why did you do it? I announced yesterday that nobody has to stay on the toilet.’ I said ‘I’m not from your block, I am from … block number three, your block is number one’. So he began to laugh and he said ‘Well, tough luck.’”
         </p>
         <p style="font-size: 0.85em; color: #555;">
@@ -254,34 +254,34 @@ export const campGeojson = {
       },
     },
 
-    {
-      //Fence
-      type: "Feature",
-      properties: {
-        message: "",
-        name: "Barbed-Wire Fence",
-        model: "KW-final-v3-optimized.glb",
-        // altmodel: "built-floor-plan-24-nov.glb",
-        camPos: {
-          x: 101.23900368286202,
-          y: 1.027016985698823,
-          z: -237.08516213983452,
-        },
-        lookAt: {
-          x: 147.5249711449844,
-          y: 2.003325463065164,
-          z: -232.58572083348278,
-        },
-        iconSize: [30, 30],
-        icon: "./icons/icon_3d.png",
-        description:
-          "Inmates in the camp were seperated by gender. They would often meet here and communicate through the barbed-wire fence.",
-      },
-      geometry: {
-        type: "Point",
-        coordinates: [24.130498292683797, 56.99763985688935],
-      },
-    },
+    // {
+    //   //Fence
+    //   type: "Feature",
+    //   properties: {
+    //     message: "",
+    //     name: "Barbed-Wire Fence",
+    //     model: "KW-final-v3-optimized.glb",
+    //     // altmodel: "built-floor-plan-24-nov.glb",
+    //     camPos: {
+    //       x: 101.23900368286202,
+    //       y: 1.027016985698823,
+    //       z: -237.08516213983452,
+    //     },
+    //     lookAt: {
+    //       x: 147.5249711449844,
+    //       y: 2.003325463065164,
+    //       z: -232.58572083348278,
+    //     },
+    //     iconSize: [30, 30],
+    //     icon: "./icons/icon_3d.png",
+    //     description:
+    //       "Inmates in the camp were seperated by gender. They would often meet here and communicate through the barbed-wire fence.",
+    //   },
+    //   geometry: {
+    //     type: "Point",
+    //     coordinates: [24.130498292683797, 56.99763985688935],
+    //   },
+    // },
 
     {
       //infirmary
@@ -306,6 +306,7 @@ export const campGeojson = {
         description: `
         <p>
           This building likely served as the infirmary. While prisoners would get treated here, many would not return. As such, prisoners would not report illnesses and injuries to the guards.
+          <br><br>“Regardless how sick you were, and once we found out what was going on in this medical building, you-- you wouldn't dare go in.”
         </p>
         <p style="font-size: 0.85em; color: #555;">
           <br><br>Strauss, Berthold. Interview 3964. Segment 26-28. Interview by Rachelle Cohen. <i>Visual History Archive</i>, USC Shoah Foundation, 13 July 1995. https://vha.usc.edu/testimony/3964. Accessed 09 Dec 2025.
