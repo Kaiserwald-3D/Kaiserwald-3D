@@ -25,16 +25,16 @@ export function initThreejs(containerID, model, camPos = null, lookAt = null) {
   const ambient = new THREE.AmbientLight(0xffffff, 1); // ← global soft light
   scene.add(ambient);
 
-  const dir = new THREE.DirectionalLight(0xffffff, 2); // ← main key light
+  const dir = new THREE.DirectionalLight(0xffffff, 0.3); // ← main key light
   dir.position.set(10, 10, 10);
   scene.add(dir);
 
   /* ---------- camera ---------- */
   const container = document.getElementById(containerID);
   camera = new THREE.PerspectiveCamera(
-    75,
+    45,
     container.clientWidth / container.clientHeight,
-    0.1,
+    0.5,
     2000
   );
 
